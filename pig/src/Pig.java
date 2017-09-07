@@ -18,7 +18,7 @@ public class Pig {
     final Random rand = new Random();
 
     void program() {
-        //test();                 // <-------------- Uncomment run to tests!
+        test();                 // <-------------- Uncomment run to tests!
         int diceRoll;
         int winPts = 100;          // Points to win
         Player[] players;         // The players (array of Player objects)
@@ -186,9 +186,65 @@ public class Pig {
 
     // ----- Testing -----------------
     void test() {
+        int roll = rollDice();
+        if (1 <= roll && roll <= 6){
+            out.println("Dice roll test successful");
+        } else {
+            out.println("Dice roll test unsuccessful");
+        }
 
-        // TODO Add your tests here
+        Player[] players = new Player[3];
+        players[0] = new Player();
+        players[1] = new Player();
+        players[2] = new Player();
+        players[0].name = "Olle";
+        players[1].name = "Fia";
+        players[2].name = "CPU";
 
+        printPlayer(players[0].name);
+        out.println();
+
+        int computerReturn;
+
+        players[0].totalPts = 23;
+
+        computerReturn = computerLogic(players, 2);
+
+        if (computerReturn == 1){
+            out.println("Computer test1 successful");
+        } else {
+            out.println("Computer test1 unsuccessful");
+        }
+
+        players[2].roundPts = 40;
+
+        computerReturn = computerLogic(players, 2);
+
+        if (computerReturn == 0){
+            out.println("Computer test2 successful");
+        } else {
+            out.println("Computer test2 unsuccessful");
+        }
+
+        players[1].totalPts = 72;
+
+        computerReturn = computerLogic(players, 2);
+
+        if (computerReturn == 1){
+            out.println("Computer test3 successful");
+        } else {
+            out.println("Computer test3 unsuccessful");
+        }
+
+        players[0].totalPts = 99;
+
+        int maxScore = getPlayerMaxScore(players);
+
+        if (maxScore == players[0].totalPts) {
+            out.println("Max score test successful");
+        } else {
+            out.println("Max score test unsuccessful");
+        }
         exit(0);   // End program
     }
 }
