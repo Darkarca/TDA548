@@ -18,9 +18,11 @@ public class Pig {
     final Random rand = new Random();
 
     void program() {
-        test();                 // <-------------- Uncomment run to tests!
+        //test();                 // <-------------- Uncomment run to tests!
         int diceRoll;
         int winPts = 100;          // Points to win
+        int round = 0;
+        int currentPlayer;
         Player[] players;         // The players (array of Player objects)
         boolean aborted = false;  // Game aborted by player
 
@@ -30,47 +32,47 @@ public class Pig {
         statusMsg(players);
 
 
-        while (true) {                                                                                                // Initiates while loop in order to keep game running until wincondition is met or game is aborted
-            for (int i = 0; i < players.length; i++) {                                                              // For loop that handles which players turn it is is initiated
-                players[i].roundPts = 0;                                                                                // Resets the points for this round to 0
 
-                while (true) {
-                    printPlayer(players[i].name);                                                                                     // Asks for this players input for this round
-                    String input;
-                    if (players[i].name.contains("CPU")) {
-                        input = computerIO(players, i);
-                    } else {
-                        input = playerInput();
-                    }
-
-                    if (input.equals("r")) {                                                                         // Checks if current player decides to roll the die
-                        diceRoll = rollDice();                                                                          // Calls the method "rollDice" to randomize the die "output"
-                        if (diceRoll == 1) {                                                                           // Checks if diceRoll is 1 which then ends the round
-                            out.println("Got 1 lost it all!");
-                            statusMsg(players);
-                            break;                                                                                      // Break current loop in order to let the next player have their turn
-                        } else {                                                                                        // For any other number, (2-6), add the number rolled to the roundpts variable
-                            players[i].roundPts += diceRoll;
-                            if (players[i].roundPts + players[i].totalPts >= winPts) {                                // Check if wincondition is met
-                                players[i].totalPts += players[i].roundPts;                                             // Calculate the points for the winning player and display win message
-                                out.print("Game over! Winner is player " +
-                                        players[i].name + " with " + players[i].totalPts);
-                                exit(0);                                                                        // Ends application after game ends
-                            } else {                                                                                    // If wincondition is not yet met, display roundpts and re-initiate the loop
-                                out.println("Got " + diceRoll + " running total is " + players[i].roundPts);
-                            }
-                        }
-                    } else if (input.equals("n")) {                                                                      // Checks if current player decides to end their turn and save their points
-                        players[i].totalPts += players[i].roundPts;                                                     // Add roundpts to totalpts
-                        statusMsg(players);                                                                             // Display points for all players
-                        break;                                                                                          // Break current loop in order to let the next player have their turn
-                    } else if (input.equals("q")) {                                                                      // Checks if current player decides to abort the game entirely
-                        out.print("Game aborted!");
-                        exit(0);                                                                                // Ends application
-                    }
-
-                }
+        while (true) {
+            currentPlayer = round % players.length;
+            printPlayer(players[currentPlayer].name);                                                                                     // Asks for this players input for this round
+            String input;
+            if (players[currentPlayer].name.contains("CPU")) {
+                input = computerIO(players, currentPlayer);
+            } else {
+                input = playerInput();
             }
+
+            if (input.equals("r")) {                                                                         // Checks if current player decides to roll the die
+                diceRoll = rollDice();                                                                          // Calls the method "rollDice" to randomize the die "output"
+                if (diceRoll == 1) {                                                                           // Checks if diceRoll is 1 which then ends the round
+                    out.println("Got 1 lost it all!");
+                    statusMsg(players);
+                    round++;                                                                                      // Break current loop in order to let the next player have their turn
+                    players[currentPlayer].roundPts = 0;                                                        // Resets the points for this round to 0
+
+                } else {                                                                                        // For any other number, (2-6), add the number rolled to the roundpts variable
+                    players[currentPlayer].roundPts += diceRoll;
+                    if (players[currentPlayer].roundPts + players[currentPlayer].totalPts >= winPts) {                                // Check if wincondition is met
+                        players[currentPlayer].totalPts += players[currentPlayer].roundPts;                                             // Calculate the points for the winning player and display win message
+                        out.print("Game over! Winner is player " +
+                                players[currentPlayer].name + " with " + players[currentPlayer].totalPts);
+                        break;                                                                        // Ends application after game ends
+                    } else {                                                                                    // If wincondition is not yet met, display roundpts and re-initiate the loop
+                        out.println("Got " + diceRoll + " running total is " + players[currentPlayer].roundPts);
+                    }
+                }
+            } else if (input.equals("n")) {                                                                      // Checks if current player decides to end their turn and save their points
+                players[currentPlayer].totalPts += players[currentPlayer].roundPts;                                                     // Add roundpts to totalpts
+                statusMsg(players);                                                                             // Display points for all players
+                round++;                                                                                          // Break current loop in order to let the next player have their turn
+                players[currentPlayer].roundPts = 0;                                                            // Resets the points for this round to 0
+
+            } else if (input.equals("q")) {                                                                      // Checks if current player decides to abort the game entirely
+                out.print("Game aborted!");
+                break;                                                                                // Ends application
+            }
+
         }
         // TODO Write game here!
 
