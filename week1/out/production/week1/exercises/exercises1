@@ -1,0 +1,177 @@
+
+**** Exercises week 1 ***
+
+Preparation
+-------------
+- Create a directory named tda548, use to store all exercises and labs
+  (if don't have, close this and move it, then start again)
+
+- Fix code reformatting key shortcut (format continuously!)
+  - Goto File > Settings > Keymap > Main Menu > Code > Reformat Code
+  - Right click > Add Keyboard Shortcut
+  - Press: Ctrl + <   , OK button then Apply button.
+
+  NOTE: Most important Keyboard short cut : Ctrl z    (= undo!!!)
+
+- If you're new to programming, do as many exercises as possible, will prepare for lab1.
+  *BUT*, you can't spend all your time on exercises, lab1 need time and is mandatory.
+  Decide when to switch. Do left over exercises later or as exam recap.
+
+  Also: You could work in parallel, see instructions in pig.zip on course page > Laborationer.
+
+General instructions
+----------------------
+- Files you need for the exercises are in directory exercises
+- Last in file header is a comment: "See: ..."
+  This means there are code samples in the /samples directory to help you.
+  Check them out. Run (right click on/in file > Run), modify, experiment, etc.
+- If stuck, don't spend too much time on a single exercise, try another one ... if you don't get
+  instant help (i.e. assistant) WRITE DOWN WHERE/WY/ETC. YOU GOT STUCK! Bring to lecture and ask!
+
+Exercises
+---------
+1.  See Ex1BMI. Implement a program to calculate body mass index. Program should run be like:
+
+    Please, enter your weight (kg) > 76
+    Please, enter your height (m) > 1.85
+    BMI = 22.205989773557338
+
+2.  See Ex2EasterDay. Program run should be like:
+
+    Input a year (1900-2099) > 2017
+    Easter Sunday for 2017 is : 16/4
+
+    TIP: See https://en.wikipedia.org/wiki/List_of_dates_for_Easter
+
+3.  See Ex3SumAvg. Write a program that calculates sum and average for positive integers.
+    You should use a loop. Program run should be like:
+
+    > 5
+    > 2
+    > 3
+    > -1         (-1 used to end input)
+    Sum = 10 Avg = 3.3333333333333335
+
+4.  Se Ex4Arrays. Implement a program like below. You should use an Array to store the values and
+    for-loops to process.
+
+    Input 5 integers (space between, then enter) > 4 2 6 1 9
+    Array is [4, 2, 6, 1, 9]
+    Input a value to find > 1
+    Value 1 is at index 3         (if not found prints: Value not found)
+
+5.  See Ex5Methods. Implement the methods. Program run should run like:
+
+    true    (this is the normal output when just testing solutions, it's not a full program)
+    true
+    true
+    true
+    true
+    true
+    true
+    Winner is Olle         (this is an exception to the normal output)
+
+6.  See Ex6Classes. Use the class Hero to create 2 heroes (hero objects) to be use like:
+
+    What's the name of the Hero 1? > Hercules      (input data)
+    How strong is Hercules > 34
+    What's the name of the Hero 2? > Atlas
+    How strong is Atlas > 45
+    Atlas is stronger
+
+
+7.  See Ex7SmallestStepRPS. Implement a program for Rock, Paper and Scissor.
+    NOTE: The main task here is to use smallest step tactic.
+    If new to programming: Make a plan and discuss with assistant before staring to implement!
+    You don't need any methods for this, put all code in program().
+
+    The game should run as (just 5 rounds):
+
+    Welcome to Rock, Paper and Scissors
+    Select 1, 2 or 3 (for R, P or S) > 1
+    Computer choose: 2
+    You won
+    Result 1                                (use an int for over all result +1 for human, total = 1)
+    Select 1, 2 or 3 (for R, P or S) > 2
+    Computer choose: 2
+    A draw
+    Result 1
+    Select 1, 2 or 3 (for R, P or S) > 3
+    Computer choose: 1
+    You won
+    Result 2                                   (result +1 for human, total = 2)
+    Select 1, 2 or 3 (for R, P or S) > 1
+    Computer choose: 1
+    A draw
+    Result 2
+    Select 1, 2 or 3 (for R, P or S) > 2
+    Computer choose: 1
+    Computer won
+    Result 1                        (total = 1 -> i.e. total positive -> human won)
+    Game over!
+    Human won.
+
+
+8.  See Ex8FuncDecompDayNumber. Implement a program that calculates the day number for a given year.
+    NOTE: Main task here is functional decomposition (+ small steps).
+    If new to programming: Make a plan and discuss with assistant before staring to implement!
+
+    Program should run like:
+
+    Input a year > 2017
+    Input a month number > 3
+    Input a day number > 17
+    Day number for 17/3 in 2017 is: 76
+    2017 is not a leap year
+
+    TIP: See web how to calculate leap year.
+
+9.  See Ex9FuncDecompTicTacToe. Implement the Tic Tac Toe game.
+    NOTE: Main task here is functional decomposition (+small steps).
+    If new to programming: Make a plan and discuss with assistant before staring to implement!
+
+    Program should run like:
+
+    Welcome to Tic Tac Toe, board is ...
+    - - -             (empty board)
+    - - -
+    - - -
+    Player is olle(X)
+    Select position to put mark (0-8) > 0
+    X - -
+    - - -
+    - - -
+    Player is fia(O)
+    Select position to put mark (0-8) > 1
+    X O -
+    - - -
+    - - -
+    Player is olle(X)
+    Select position to put mark (0-8) > 2
+    X O X
+    - - -
+    - - -
+    Player is fia(O)
+    Select position to put mark (0-8) > 3
+    X O X
+    O - -
+    - - -
+    Player is olle(X)
+    Select position to put mark (0-8) > 4
+    X O X
+    O X -
+    - - -
+    Player is fia(O)
+    Select position to put mark (0-8) > 5
+    X O X
+    O X O
+    - - -
+    Player is olle(X)
+    Select position to put mark (0-8) > 6
+    Game over!
+    X O X
+    O X O
+    X - -
+    Winner is olle
+
+
