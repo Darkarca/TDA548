@@ -25,6 +25,7 @@ public class Pig {
         int currentPlayer;
         Player[] players;         // The players (array of Player objects)
         boolean aborted = false;  // Game aborted by player
+        boolean gameWon = false;
 
         welcomeMsg(winPts);
 
@@ -33,9 +34,9 @@ public class Pig {
 
 
 
-        while (true) {
+        while (!aborted && !gameWon) {
             currentPlayer = round % players.length;
-            printPlayer(players[currentPlayer].name);                                                                                     // Asks for this players input for this round
+            printPlayer(players[currentPlayer].name);
             String input;
             if (players[currentPlayer].name.contains("CPU")) {
                 input = computerIO(players, currentPlayer);
@@ -43,34 +44,34 @@ public class Pig {
                 input = playerInput();
             }
 
-            if (input.equals("r")) {                                                                         // Checks if current player decides to roll the die
-                diceRoll = rollDice();                                                                          // Calls the method "rollDice" to randomize the die "output"
-                if (diceRoll == 1) {                                                                           // Checks if diceRoll is 1 which then ends the round
+            if (input.equals("r")) {                                                                                    // Checks if current player decides to roll the die
+                diceRoll = rollDice();                                                                                  // Calls the method "rollDice" to randomize the die "output"
+                if (diceRoll == 1) {                                                                                        // Checks if diceRoll is 1 which then ends the round
                     out.println("Got 1 lost it all!");
                     statusMsg(players);
-                    round++;                                                                                      // Break current loop in order to let the next player have their turn
-                    players[currentPlayer].roundPts = 0;                                                        // Resets the points for this round to 0
+                    round++;                                                                                            // Break current loop in order to let the next player have their turn
+                    players[currentPlayer].roundPts = 0;                                                                // Resets the points for this round to 0
 
-                } else {                                                                                        // For any other number, (2-6), add the number rolled to the roundpts variable
+                } else {                                                                                                // For any other number, (2-6), add the number rolled to the roundpts variable
                     players[currentPlayer].roundPts += diceRoll;
-                    if (players[currentPlayer].roundPts + players[currentPlayer].totalPts >= winPts) {                                // Check if wincondition is met
-                        players[currentPlayer].totalPts += players[currentPlayer].roundPts;                                             // Calculate the points for the winning player and display win message
+                    if (players[currentPlayer].roundPts + players[currentPlayer].totalPts >= winPts) {                  // Check if wincondition is met
+                        players[currentPlayer].totalPts += players[currentPlayer].roundPts;                             // Calculate the points for the winning player and display win message
                         out.print("Game over! Winner is player " +
                                 players[currentPlayer].name + " with " + players[currentPlayer].totalPts);
-                        break;                                                                        // Ends application after game ends
-                    } else {                                                                                    // If wincondition is not yet met, display roundpts and re-initiate the loop
+                        gameWon = true;                                                                                 // Ends application after game ends
+                    } else {                                                                                            // If wincondition is not yet met, display roundpts and re-initiate the loop
                         out.println("Got " + diceRoll + " running total is " + players[currentPlayer].roundPts);
                     }
                 }
-            } else if (input.equals("n")) {                                                                      // Checks if current player decides to end their turn and save their points
+            } else if (input.equals("n")) {                                                                             // Checks if current player decides to end their turn and save their points
                 players[currentPlayer].totalPts += players[currentPlayer].roundPts;                                                     // Add roundpts to totalpts
-                statusMsg(players);                                                                             // Display points for all players
-                round++;                                                                                          // Break current loop in order to let the next player have their turn
-                players[currentPlayer].roundPts = 0;                                                            // Resets the points for this round to 0
+                statusMsg(players);                                                                                     // Display points for all players
+                round++;                                                                                                // Break current loop in order to let the next player have their turn
+                players[currentPlayer].roundPts = 0;                                                                    // Resets the points for this round to 0
 
-            } else if (input.equals("q")) {                                                                      // Checks if current player decides to abort the game entirely
+            } else if (input.equals("q")) {                                                                             // Checks if current player decides to abort the game entirely
                 out.print("Game aborted!");
-                break;                                                                                // Ends application
+                aborted = true;                                                                                         // Ends application
             }
 
         }
@@ -88,7 +89,7 @@ public class Pig {
 
         int maxScore = players[0].totalPts;
 
-        for (int i = 0; i < players.length - 1; i++) {                                                                    // Compares scores of all players, selects the one with the highest score
+        for (int i = 0; i < players.length - 1; i++) {                                                                  // Compares scores of all players, selects the one with the highest score
             if (players[i].totalPts > maxScore) {
                 maxScore = players[i].totalPts;
             }
@@ -103,12 +104,12 @@ public class Pig {
 
         int maxScore = getPlayerMaxScore(players);
 
-        int optimal = 21 + Math.round((maxScore - players[currentPlayer].totalPts) / 8);                        // Calculates optimal round score to aim for
+        int optimal = 21 + Math.round((maxScore - players[currentPlayer].totalPts) / 8);                                // Calculates optimal round score to aim for
 
 
-        if (maxScore >= 71 || players[currentPlayer].totalPts >= 71) {                                         // If any player has a score over 71 the computer will roll continuously
+        if (maxScore >= 71 || players[currentPlayer].totalPts >= 71) {                                                  // If any player has a score over 71 the computer will roll continuously
             return PROCEED;
-        } else if (players[currentPlayer].roundPts > optimal) {                                                           // If the computers running score is over the previously calculated optimal score, the computer will pass
+        } else if (players[currentPlayer].roundPts > optimal) {                                                         // If the computers running score is over the previously calculated optimal score, the computer will pass
             return ABORT;
         } else {
             return PROCEED;
@@ -116,8 +117,8 @@ public class Pig {
 
     }
 
-    int rollDice() {                                                                                                     // Rolls a die
-        return rand.nextInt(6) + 1;                                                                             // Returns a random number between 1 and 6
+    int rollDice() {                                                                                                    // Rolls a die
+        return rand.nextInt(6) + 1;                                                                              // Returns a random number between 1 and 6
     }
 
 
