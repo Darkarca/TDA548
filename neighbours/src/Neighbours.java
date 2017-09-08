@@ -7,7 +7,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import static java.lang.Math.round;
@@ -50,6 +49,66 @@ public class Neighbours extends Application {
         // TODO add methods
     }
 
+    Actor[][] genWorld(double pRed, double pBlue, double pNone, int nLocations){
+
+        int nRed = (int)(pRed * nLocations);
+        int nBlue= (int)(pBlue * nLocations);
+
+        Actor[][] tempWorld = genNoneArray(nLocations);
+        //tempWorld[1][1] = Actor.NONE;
+        //Arrays.fill(tempWorld, Actor.NONE);
+
+        populateWorld(nLocations, nRed, tempWorld, Actor.RED);
+        populateWorld(nLocations, nBlue, tempWorld, Actor.BLUE);
+
+        return tempWorld;
+
+    }
+
+    Actor[][] genNoneArray(int nLocations){
+
+        Actor[][] tempWorld = new Actor[(int)sqrt(nLocations)][(int)sqrt(nLocations)];
+
+        for(int col = 0; col < sqrt(nLocations); col++){
+            for(int row = 0; row < sqrt(nLocations); row++){
+                tempWorld[col][row] = Actor.NONE;
+            }
+        }
+        return tempWorld;
+
+    }
+
+    void populateWorld(int nLocations, int nPop, Actor[][] tempWorld, Actor val) {
+
+        int count = 0;
+        int[] rowCol;
+
+        while (count <= nPop) {
+            rowCol = getRandomLocation(nLocations);
+            if (isEmptyLocattion(tempWorld, rowCol[0], rowCol[1])){
+                tempWorld[rowCol[0]][rowCol[1]] = val;
+                count++;
+            }
+        }
+
+    }
+
+    boolean isEmptyLocattion(Actor[][] tempWorld, int col, int row) {
+
+        // TODO:*
+        return true;
+    }
+
+
+    int[] getRandomLocation(int nlocations){
+        Random rand = new Random();
+        int[] randomLocation = new int[2];
+        randomLocation[1] = rand.nextInt((int)sqrt(nlocations));
+        randomLocation[0] = rand.nextInt((int)sqrt(nlocations));
+
+        return randomLocation;
+    }
+
     // This method initializes the world variable with a random distribution of Actors
     // Method automatically called by JavaFX runtime
     // That's why we must have "@Override" and "public" (just accept for now)
@@ -64,13 +123,13 @@ public class Neighbours extends Application {
 
         // TODO find methods that does the job
         // ...
-        // world =           // Finally set world variable
+         world = genWorld(dist[0], dist[1], dist[2], nLocations);           // Finally set world variable
     }
 
     // Check if inside world
     boolean isValidLocation(int size, int row, int col) {
         // TODO
-        return false;
+        return true;
     }
 
     // ----------- Utility methods -----------------
